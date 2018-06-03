@@ -4,10 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
-public class CustomWebAuthenticationDetails extends WebAuthenticationDetails{
+public class AppCustomWebAuthenticationDetails extends WebAuthenticationDetails{
 
 	private String outhToken;
-	public CustomWebAuthenticationDetails(HttpServletRequest request) {
+	public AppCustomWebAuthenticationDetails(HttpServletRequest request) {
 		super(request);
 		outhToken=request.getParameter("outhToken");
 	}

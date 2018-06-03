@@ -17,25 +17,25 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.transportation.app.security.AuthenticationFiltter;
-import com.transportation.app.security.AuthenticationSuccessHandler;
-import com.transportation.app.security.CustomWebAuthenticationDetailsSource;
-import com.transportation.app.security.FaceBookAuthenticationProvider;
-import com.transportation.app.security.GoogleAuthenticationProvider;
-import com.transportation.app.security.UserNameAndPasswordAuthenticationProvider;
+import com.transportation.app.security.AppAuthenticationFiltter;
+import com.transportation.app.security.AppAuthenticationSuccessHandler;
+import com.transportation.app.security.AppCustomWebAuthenticationDetailsSource;
+import com.transportation.app.security.AppFaceBookAuthenticationProvider;
+import com.transportation.app.security.AppGoogleAuthenticationProvider;
+import com.transportation.app.security.AppUserNameAndPasswordAuthenticationProvider;
 
 @Configuration
 @EnableWebSecurity
-public class TransportaionAppSecurity extends WebSecurityConfigurerAdapter{
+public class AppSecurity extends WebSecurityConfigurerAdapter{
 
 	@Autowired
-	private UserNameAndPasswordAuthenticationProvider userNameAndPasswordAuthenticationProvider;
+	private AppUserNameAndPasswordAuthenticationProvider userNameAndPasswordAuthenticationProvider;
 	
 	@Autowired
-	private FaceBookAuthenticationProvider faceBookAuthenticationProvider;
+	private AppFaceBookAuthenticationProvider faceBookAuthenticationProvider;
 	
 	@Autowired
-	private GoogleAuthenticationProvider googleAuthenticationProvider;
+	private AppGoogleAuthenticationProvider googleAuthenticationProvider;
 	
 	@Autowired
 	private AccessDeniedHandler accessDeniedHandler;
@@ -44,10 +44,10 @@ public class TransportaionAppSecurity extends WebSecurityConfigurerAdapter{
 	private AuthenticationEntryPoint authenticationEntryPoint;
 	
 	@Autowired
-	private CustomWebAuthenticationDetailsSource customWebAuthenticationDetailsSource;
+	private AppCustomWebAuthenticationDetailsSource customWebAuthenticationDetailsSource;
 	
 	@Autowired
-	private AuthenticationSuccessHandler authenticationSuccessHandler;
+	private AppAuthenticationSuccessHandler appAuthenticationSuccessHandler;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -58,7 +58,7 @@ public class TransportaionAppSecurity extends WebSecurityConfigurerAdapter{
 					.accessDeniedHandler(accessDeniedHandler)
 					.authenticationEntryPoint(authenticationEntryPoint)
 			.and()
-				.formLogin().successHandler(authenticationSuccessHandler).authenticationDetailsSource(customWebAuthenticationDetailsSource)
+				.formLogin().successHandler(appAuthenticationSuccessHandler).authenticationDetailsSource(customWebAuthenticationDetailsSource)
 			.and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
@@ -77,8 +77,8 @@ public class TransportaionAppSecurity extends WebSecurityConfigurerAdapter{
 	  }
 	 
 	 @Bean
-	 public AuthenticationFiltter authenticationFiltter() {
-		 return new AuthenticationFiltter(authenticationManager());
+	 public AppAuthenticationFiltter authenticationFiltter() {
+		 return new AppAuthenticationFiltter(authenticationManager());
 	 }
 	
 }

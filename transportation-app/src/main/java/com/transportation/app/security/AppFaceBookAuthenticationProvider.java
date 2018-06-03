@@ -8,14 +8,14 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GoogleAuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider{
+public class AppFaceBookAuthenticationProvider implements org.springframework.security.authentication.AuthenticationProvider{
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		// TODO Auto-generated method stub
 		UsernamePasswordAuthenticationToken passwordAuthenticationToken=null;
-		System.out.println("in AuthenticationProvider2");
-		String authToken=((CustomWebAuthenticationDetails)authentication.getDetails()).getOuthToken();
+		System.out.println("in FaceBookAuthenticationProvider");
+		String authToken=((AppCustomWebAuthenticationDetails)authentication.getDetails()).getOuthToken();
 		if(authToken!=null && "google".equals(authToken)) {
 			passwordAuthenticationToken=new UsernamePasswordAuthenticationToken("admin", "password", new ArrayList<>());
 			

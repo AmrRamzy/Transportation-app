@@ -11,7 +11,7 @@ import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AccessDeniedHandler extends AccessDeniedHandlerImpl{
+public class AppAccessDeniedHandler extends AccessDeniedHandlerImpl{
 
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,

@@ -5,10 +5,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 
 @Entity
-public class UserData {
+@Table(name="User_Data")
+public class AppUserData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USERDATA_SEQ")
     @SequenceGenerator(sequenceName = "user_data_seq", allocationSize = 1, name = "USERDATA_SEQ")
@@ -17,6 +21,9 @@ public class UserData {
 	String username;
 	String password;
 	String email;
+	Boolean active;
+	Boolean loggedIn;
+	
 	public Long getId() {
 		return id;
 	}
@@ -33,7 +40,7 @@ public class UserData {
 		return password;
 	}
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = hashPassword(password);
 	}
 	public String getEmail() {
 		return email;
@@ -41,8 +48,21 @@ public class UserData {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
+	public Boolean getActive() {
+		return active;
+	}
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+	public Boolean getLoggedIn() {
+		return loggedIn;
+	}
+	public void setLoggedIn(Boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
+	private static String hashPassword(String plainText) {
+		return BCrypt.hashpw(plainText, BCrypt.gensalt(14));
+	}
 	
 
 }

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class TransportaionAppRestController{
+public class AppRestController{
 
 	@GetMapping("/")
 	public String home() {

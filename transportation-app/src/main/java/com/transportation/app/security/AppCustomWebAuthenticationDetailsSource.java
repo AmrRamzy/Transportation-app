@@ -7,12 +7,12 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CustomWebAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails>{
+public class AppCustomWebAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails>{
 
 	@Override
 	public WebAuthenticationDetails buildDetails(HttpServletRequest context) {
 		// TODO Auto-generated method stub
-		return new CustomWebAuthenticationDetails(context);
+		return new AppCustomWebAuthenticationDetails(context);
 	}
 
 }

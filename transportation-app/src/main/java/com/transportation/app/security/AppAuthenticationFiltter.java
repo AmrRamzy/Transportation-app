@@ -13,11 +13,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 
-public class AuthenticationFiltter extends BasicAuthenticationFilter{
+public class AppAuthenticationFiltter extends BasicAuthenticationFilter{
 
-	public AuthenticationFiltter(AuthenticationManager authenticationManager) {
+	public AppAuthenticationFiltter(AuthenticationManager authenticationManager) {
 		super(authenticationManager);
 		// TODO Auto-generated constructor stub
 	}
@@ -29,11 +30,15 @@ public class AuthenticationFiltter extends BasicAuthenticationFilter{
 		String url=request.getRequestURI();
 		System.out.println("in AuthenticationFiltter");
 		System.out.println(url);
-		String authorization=request.getHeader("Authorization");
-		if("Amr".equals(authorization)) {
-			UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken("temp", "temp", new ArrayList<>());
-			SecurityContextHolder.getContext().setAuthentication(token);
+		String token=request.getHeader(AppSecurityConstants.AUTHORIZATION_HEADER);
+		if(!StringUtils.isEmpty(token) && token.startsWith(AppSecurityConstants.BEARER)) {
+			String authorizationToken=token.replaceFirst(AppSecurityConstants.BEARER, "");
+			if(AppJwtTokenUtils.validateToken(authorizationToken)) {
+				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken=new UsernamePasswordAuthenticationToken("temp", "temp", new ArrayList<>());
+				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+			}
 		}
+		
 		chain.doFilter(request, response);
 	}
 
